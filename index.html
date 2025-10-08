@@ -1,1 +1,657 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Pengembang Web</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Desain Sistem */
+        :root {
+            --primary-color: #1B2B23;
+            --accent-color: #F5A524;
+            --text-color: #EAEAEA;
+            --bg-color: #121212;
+            --surface-color: #1E1E1E;
+            --heading-font: 'Poppins', sans-serif;
+            --body-font: 'Inter', sans-serif;
+        }
 
+        /* Reset & Global */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--body-font);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--heading-font);
+            color: var(--text-color);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 6rem 0;
+        }
+
+        /* Komponen */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+        }
+
+        .card {
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            background-color: rgba(245, 165, 36, 0.1);
+            color: var(--accent-color);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            transition: background-color 0.4s ease, padding 0.4s ease, backdrop-filter 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(27, 43, 35, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: var(--heading-font);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 0.25rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        #hero .container {
+            max-width: 800px;
+        }
+
+        #hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        #hero .subtitle {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+        }
+
+        #hero .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2.5rem;
+        }
+
+        /* About Section */
+        #about .container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        #about img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 50%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            justify-self: center;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .skill-item {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--surface-color);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .skill-item svg {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 1rem;
+            fill: var(--accent-color);
+        }
+
+        /* Portfolio Section */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .portfolio-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .portfolio-card .card-content {
+            padding: 1.5rem;
+        }
+
+        .portfolio-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-card .tags {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        /* Journey Section */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 3rem auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 60px;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 60px;
+            text-align: left;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: var(--bg-color);
+            border: 4px solid var(--accent-color);
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: var(--surface-color);
+            position: relative;
+            border-radius: 8px;
+        }
+
+        .timeline-content h3 {
+            color: var(--accent-color);
+        }
+
+        .timeline-content .date {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #aaa;
+        }
+
+        /* Achievements Section */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .achievement-card {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .achievement-card .icon {
+            font-size: 3rem;
+        }
+
+        /* CTA Section */
+        #cta .container {
+            max-width: 700px;
+            text-align: center;
+        }
+
+        #cta form {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        #cta input, #cta textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--primary-color);
+            background-color: var(--surface-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-family: var(--body-font);
+        }
+
+        #cta input:focus, #cta textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 2rem;
+            }
+
+            #hero h1 {
+                font-size: 3rem;
+            }
+
+            .nav-links {
+                display: none; /* Simplifikasi untuk contoh ini */
+            }
+
+            #about .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            #about img {
+                margin-bottom: 2rem;
+            }
+
+            .timeline::after {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 60px;
+                padding-right: 20px;
+                text-align: left !important;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0%;
+            }
+
+            .timeline-item::after {
+                left: 10px !important;
+            }
+
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar" id="navbar">
+        <div class="container">
+            <a href="#hero" class="nav-logo">Jules.dev</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#about">Tentang Saya</a></li>
+                    <li><a href="#skills">Keahlian</a></li>
+                    <li><a href="#portfolio">Portofolio</a></li>
+                    <li><a href="#journey">Perjalanan</a></li>
+                    <li><a href="#cta">Kontak</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="container">
+                <p class="subtitle">Halo, saya Jules, seorang</p>
+                <h1>Full-Stack Web Developer</h1>
+                <p>Saya merancang dan membangun pengalaman web yang modern, responsif, dan fungsional dari ide hingga peluncuran.</p>
+                <div class="hero-buttons">
+                    <a href="#portfolio" class="btn btn-primary">Lihat Proyek Saya</a>
+                    <a href="#cta" class="btn btn-secondary">Hubungi Saya</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="container">
+                <img src="https://i.pravatar.cc/300?u=julesdev" alt="Foto Jules">
+                <div>
+                    <h2>Tentang Saya</h2>
+                    <p>
+                        Sebagai seorang pengembang dengan pengalaman lebih dari 5 tahun, saya memiliki hasrat untuk memecahkan masalah melalui kode. Saya ahli dalam tumpukan teknologi modern dan selalu antusias mempelajari hal-hal baru untuk menciptakan aplikasi web yang lebih baik, lebih cepat, dan lebih intuitif bagi pengguna. Di luar coding, saya menikmati fotografi dan hiking.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="container">
+                <h2>Keahlian Utama</h2>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2L1 9l4 2.18v6.32L12 22l7-4.5V11.18L23 9zM12 4.41L19.01 9 12 12.58 4.99 9zM17 12v3.82l-5 2.86-5-2.86V12l5 2.86z"/></svg>
+                        <p>Frontend Dev</p>
+                    </div>
+                    <div class="skill-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
+                        <p>Backend Dev</p>
+                    </div>
+                    <div class="skill-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/></svg>
+                        <p>API Design</p>
+                    </div>
+                    <div class="skill-item">
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4s1.79-4 4-4h.71C7.37 7.69 9.48 6 12 6c3.04 0 5.5 2.46 5.5 5.5v.5H19c1.66 0 3 1.34 3 3s-1.34 3-3 3z"/></svg>
+                        <p>Cloud & DevOps</p>
+                    </div>
+                     <div class="skill-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        <p>Testing</p>
+                    </div>
+                    <div class="skill-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                        <p>UI/UX Design</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio">
+            <div class="container">
+                <h2>Portofolio Proyek</h2>
+                <div class="portfolio-grid">
+                    <div class="card portfolio-card">
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDN8fGNvZGV8ZW58MHx8fHwxNjE2NTg0MDMy&ixlib=rb-1.2.1&q=80&w=400" alt="Proyek 1">
+                        <div class="card-content">
+                            <h3>Aplikasi Analitik SaaS</h3>
+                            <p>Platform analitik berbasis web yang memberikan wawasan bisnis secara real-time.</p>
+                            <div class="tags">
+                                <span class="badge">React</span>
+                                <span class="badge">Node.js</span>
+                                <span class="badge">PostgreSQL</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card portfolio-card">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDV8fGRhc2hib2FyZHxlbnwwfHx8fDE2MTY1ODQwNjM&ixlib=rb-1.2.1&q=80&w=400" alt="Proyek 2">
+                         <div class="card-content">
+                            <h3>Situs E-Commerce Modern</h3>
+                            <p>Toko online yang cepat dan mobile-first dengan sistem manajemen konten yang mudah digunakan.</p>
+                            <div class="tags">
+                                <span class="badge">Next.js</span>
+                                <span class="badge">GraphQL</span>
+                                <span class="badge">Stripe</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card portfolio-card">
+                        <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJsb2d8ZW58MHx8fHwxNjE2NTg0MDk1&ixlib=rb-1.2.1&q=80&w=400" alt="Proyek 3">
+                        <div class="card-content">
+                            <h3>Platform Blogging Kolaboratif</h3>
+                            <p>Sebuah platform di mana penulis dapat berkolaborasi pada artikel secara real-time.</p>
+                            <div class="tags">
+                                <span class="badge">Vue.js</span>
+                                <span class="badge">Firebase</span>
+                                <span class="badge">WebSockets</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="journey">
+            <div class="container">
+                <h2>Perjalanan Karir</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Senior Full-Stack Developer</h3>
+                            <div class="date">2022 - Sekarang</div>
+                            <p>Memimpin pengembangan produk di Tech Solutions Inc., membimbing junior, dan merancang arsitektur sistem.</p>
+                        </div>
+                    </div>
+                     <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Mid-Level Web Developer</h3>
+                            <div class="date">2019 - 2022</div>
+                            <p>Mengembangkan dan memelihara aplikasi web di WebCrafters Co., dengan fokus pada optimasi performa.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Junior Frontend Developer</h3>
+                            <div class="date">2017 - 2019</div>
+                            <p>Memulai karir di Innovate Digital, membangun antarmuka pengguna yang responsif dan menarik.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="achievements">
+            <div class="container">
+                <h2>Prestasi</h2>
+                <div class="achievements-grid">
+                    <div class="card achievement-card">
+                        <div class="icon">🏆</div>
+                        <div>
+                            <h3>Developer of the Year 2023</h3>
+                            <p>Dianugerahi penghargaan internal di Tech Solutions Inc. untuk kontribusi luar biasa pada proyek utama.</p>
+                        </div>
+                    </div>
+                    <div class="card achievement-card">
+                        <div class="icon">🚀</div>
+                        <div>
+                            <h3>Open Source Contributor</h3>
+                            <p>Berkontribusi aktif pada 5+ proyek open source populer, termasuk perbaikan bug dan fitur baru.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta">
+            <div class="container">
+                <h2>Mari Terhubung</h2>
+                <p>Saya selalu terbuka untuk diskusi tentang proyek baru atau peluang kolaborasi. Jangan ragu untuk mengirim pesan.</p>
+                <form>
+                    <input type="text" name="name" placeholder="Nama Anda" required>
+                    <input type="email" name="email" placeholder="Email Anda" required>
+                    <textarea name="message" rows="5" placeholder="Pesan Anda" required></textarea>
+                    <button type="submit" class="btn btn-primary">Kirim Pesan</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Dibuat oleh Jules.dev. Seluruh hak cipta.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Efek Navbar On-Scroll
+        const navbar = document.getElementById('navbar');
+        window.onscroll = function() {
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        };
+
+        // Smooth Scroll untuk Nav Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
